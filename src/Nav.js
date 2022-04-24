@@ -5,9 +5,12 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { auth } from './utils/firebase.config';
+import { signOut } from 'firebase/auth';
 
 const Nav = () => {
+  const navigate = useNavigate();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -53,7 +56,7 @@ const Nav = () => {
           </Button>
           <Button
             component={NavLink}
-            to="private"
+            to="/private"
             sx={{
               '&.active': {
                 bgcolor: 'primary.dark',
@@ -62,6 +65,15 @@ const Nav = () => {
             color="inherit"
           >
             Private
+          </Button>
+          <Button
+            color="inherit"
+            onClick={() => {
+              signOut(auth);
+              navigate('/login');
+            }}
+          >
+            Log Out
           </Button>
         </Toolbar>
       </AppBar>

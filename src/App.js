@@ -7,22 +7,25 @@ import Login from './Login';
 import Private from './Private';
 import Profile from './Profile';
 import Nav from './Nav';
+import { AuthProvider } from './context/Auth.context';
 
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
     <>
-      <Nav></Nav>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/forgotPassword" element={<ForgotPassword />} />
-        <Route path="/resetPassword" element={<ResetPassword />} />
-        <Route path="/private" element={<Private />} />
-        <Route path="/profile" element={<Profile />} />
-      </Routes>
+      <AuthProvider>
+        <Nav></Nav>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/forgotPassword" element={<ForgotPassword />} />
+          <Route path="/resetPassword" element={<ResetPassword />} />
+          <Route path="/private" element={<Private />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+      </AuthProvider>
     </>
   );
 }
