@@ -9,16 +9,18 @@ import Profile from './Profile';
 import Nav from './Nav';
 import { AuthContext, AuthProvider } from './context/Auth.context';
 
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useContext } from 'react';
 
 const AuthRequired = ({ children }) => {
+  const location = useLocation();
+  console.log(location);
   const currentUser = useContext(AuthContext);
 
   if (currentUser) {
     return children;
   } else {
-    return <Navigate to="/login" />;
+    return <Navigate to="/login" state={{ from: location.pathname }} />;
   }
 };
 

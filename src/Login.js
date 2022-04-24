@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { Link as Navigate, useNavigate } from 'react-router-dom';
+import { Link as Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import { auth } from './utils/firebase.config';
@@ -21,6 +21,9 @@ const Login = () => {
     email: '',
     password: '',
   });
+
+  const { state } = useLocation();
+
   const [success, setSuccess] = useState(false);
 
   const navigate = useNavigate();
@@ -38,7 +41,7 @@ const Login = () => {
     try {
       // submitting to firebase
       await signInWithEmailAndPassword(auth, userInfo.email, userInfo.password);
-      navigate('/profile');
+      navigate(state?.from || '/profile');
     } catch (err) {
       console.log(err);
       console.log(err.message);
