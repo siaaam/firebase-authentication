@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -23,8 +23,6 @@ const Login = () => {
   });
 
   const { state } = useLocation();
-
-  const [success, setSuccess] = useState(false);
 
   const navigate = useNavigate();
 
@@ -100,7 +98,7 @@ const Login = () => {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link component={Navigate} to="/resetPassword" variant="body2">
+              <Link component={Navigate} to="/forgotPassword" variant="body2">
                 Forget Your Password? reset Password
               </Link>
             </Grid>
