@@ -35,7 +35,9 @@ const ForgotPassword = () => {
 
     try {
       // submitting to firebase
-      await sendPasswordResetEmail(auth, userInfo.email);
+      await sendPasswordResetEmail(auth, userInfo.email, {
+        url: 'http://localhost:3000/login',
+      });
       console.log('successfully sent email');
       navigate('/login');
     } catch (err) {
