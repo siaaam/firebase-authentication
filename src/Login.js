@@ -12,7 +12,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Link as Navigate, useNavigate, useLocation } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from 'firebase/auth';
 
 import { auth } from './utils/firebase.config';
 
@@ -33,6 +37,17 @@ const Login = () => {
     });
   };
 
+  const googleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+      navigate(state?.from || '/profile');
+    } catch (err) {
+      console.log(err);
+      console.log(err.message);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -45,6 +60,7 @@ const Login = () => {
       console.log(err.message);
     }
   };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -104,6 +120,15 @@ const Login = () => {
             </Grid>
           </Grid>
         </Box>
+        <Button
+          type="submit"
+          fullWidth
+          onClick={googleSignIn}
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+        >
+          Sign In With Google
+        </Button>
       </Box>
     </Container>
   );
