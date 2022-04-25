@@ -16,6 +16,8 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 import { auth } from './utils/firebase.config';
 
+import { useSnackbar } from 'notistack';
+
 const Register = () => {
   const [userInfo, setUserInfo] = React.useState({
     firstName: '',
@@ -24,6 +26,8 @@ const Register = () => {
     password: '',
   });
   const [success, setSuccess] = useState(false);
+
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const navigate = useNavigate();
 
@@ -47,8 +51,16 @@ const Register = () => {
 
       console.log(user);
       setSuccess(true);
+      enqueueSnackbar('Registered Successfully, Please Login', {
+        variant: 'success',
+        autoHideDuration: 2000,
+      });
       navigate('/profile');
     } catch (err) {
+      enqueueSnackbar(err.message, {
+        variant: 'error',
+        autoHideDuration: 2000,
+      });
       console.log(err);
       console.log(err.message);
     }

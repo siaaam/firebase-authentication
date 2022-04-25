@@ -8,6 +8,9 @@ import Private from './Private';
 import Profile from './Profile';
 import Nav from './Nav';
 import { AuthContext, AuthProvider } from './context/Auth.context';
+import Grow from '@mui/material/Grow';
+
+import { SnackbarProvider } from 'notistack';
 
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useContext } from 'react';
@@ -26,32 +29,41 @@ const AuthRequired = ({ children }) => {
 function App() {
   return (
     <>
-      <AuthProvider>
-        <Nav></Nav>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/forgotPassword" element={<ForgotPassword />} />
-          <Route path="/resetPassword" element={<ResetPassword />} />
-          <Route
-            path="/private"
-            element={
-              <AuthRequired>
-                <Private />
-              </AuthRequired>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <AuthRequired>
-                <Profile />
-              </AuthRequired>
-            }
-          />
-        </Routes>
-      </AuthProvider>
+      <SnackbarProvider
+        maxSnack={2}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        TransitionComponent={Grow}
+      >
+        <AuthProvider>
+          <Nav></Nav>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/forgotPassword" element={<ForgotPassword />} />
+            <Route path="/resetPassword" element={<ResetPassword />} />
+            <Route
+              path="/private"
+              element={
+                <AuthRequired>
+                  <Private />
+                </AuthRequired>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <AuthRequired>
+                  <Profile />
+                </AuthRequired>
+              }
+            />
+          </Routes>
+        </AuthProvider>
+      </SnackbarProvider>
     </>
   );
 }
